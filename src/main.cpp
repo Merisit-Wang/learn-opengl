@@ -29,17 +29,25 @@ int main(void)
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
+    float pointers[] = {
+        -0.5, -0.5,
+         0, 0.5,
+         0.5, -0.5
+    };
+
+    GLuint bufferId;
+    glGenBuffers(1, &bufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), pointers, GL_STATIC_DRAW);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBegin(GL_TRIANGLES);
-        glVertex2d(-0.5, -0.5);
-        glVertex2d(0, 0.5);
-        glVertex2d(0.5, -0.5);
-        glEnd();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
